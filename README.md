@@ -1,0 +1,1 @@
+# SGSSI minero
