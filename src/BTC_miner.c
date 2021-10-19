@@ -31,7 +31,7 @@ int main(int argc, char * argv[]){
     char hash1[65];
     int count = 0, find = 0, iter = 0, max;
     uint32_t n;
-    n = 0;
+    //n = 0;
 
 
     //Nombre del nuevo fichero
@@ -46,7 +46,7 @@ int main(int argc, char * argv[]){
 	iter++;
 	//Calcular hexadecimal aleatorio e insertarlo en el bloque
 	random_hex(hex_num, n);
-	n++;
+	//n++;
 	copy_file(bloque, filename, nuevo_bloque, new_filename, hex_num);
     
 	//Hash del fichero
@@ -83,11 +83,11 @@ void __error(int cod, char *s){
 void random_hex(char hex[9], uint32_t n){
    
 
-    //FILE * f = fopen("/dev/urandom", "rb");
-    //fread(&n, sizeof(uint32_t), 1, f);
+    FILE * f = fopen("/dev/urandom", "rb");
+    fread(&n, sizeof(uint32_t), 1, f);
     sprintf(hex, "%08X", n);
-    printf("hex: %s\n", hex);
-    //fclose(f);
+    //printf("hex: %s\n", hex);
+    fclose(f);
 }
 
 void copy_file(FILE *f1, char *filename, FILE *f2, char new_filename[20], char hex[9]){
