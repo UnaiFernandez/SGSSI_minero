@@ -24,3 +24,5 @@ A la variable *file* se le asigna el nombre del bloque y a la variable *zeros* e
 **Para hacer clean ejecuta:**
 
       make clean
+
+![Ejemplo de ejecución](images/minero_img.png "Ejemplo de ejecución")
