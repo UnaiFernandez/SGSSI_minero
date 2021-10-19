@@ -11,4 +11,16 @@ El objetivo del minero en es conseguir que el resumen del ultimo bloque tenga la
 
 ## Instrucciones de uso
 
+**Para compilar el programa usa:**
+      
+      make
+      
+**Para ejecutarlo usa:**
+      
+      make exec file=CBXX zeros=N
+      
+A la variable *file* se le asigna el nombre del bloque y a la variable *zeros* el numero de ceros que se quiere como minimo.
 
+**Para hacer clean ejecuta:**
+
+      make clean
