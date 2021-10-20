@@ -122,7 +122,7 @@ void copy_file(FILE *f1, char *filename, FILE *f2, char new_filename[20], char h
     }
 
     fprintf(f2, hex);
-    fprintf(f2, " SGSSI-21_UFER\n");
+    fprintf(f2, " G10212325\n");
     fclose(f1);
     fclose(f2);
 
