@@ -12,6 +12,7 @@
 
 void __error(int cod, char *s);
 void copy_file(FILE *f1, char *filename, FILE *f2, char new_filename[20], char hex[9]);
+void copy_file_final(FILE *f1, char filename[20], FILE *f2, char new_filename[20]);
 void random_hex(char hex[9], uint32_t n);
 int count_zeros(char hash[65]);
 
@@ -25,12 +26,18 @@ int main(int argc, char * argv[]){
     }
 
     //Declaraión de variables
-    FILE *bloque, *nuevo_bloque;
-    char *filename, new_filename[20];
+    FILE *bloque, *nuevo_bloque, *final_block;
+    char *filename, new_filename[20], final_filename[20];
     char hex_num[9];
-    char hash1[65];
+    char hash1[65], hash[65];
     int count = 0, find = 0, iter = 0, max;
     uint32_t n;
+    
+    time_t start, end;
+    double dif;
+    //int sec = 0, trigger = 60;
+    //clock_t before = clock();
+    //clock_t difference;
     //n = 0;
 
 
@@ -38,11 +45,16 @@ int main(int argc, char * argv[]){
     filename = argv[1];
     max = atoi(argv[2]);
     sprintf(new_filename, "new_%s", filename);
+    sprintf(final_filename, "final_%s", filename);
     //printf("New:%s\n", new_filename);
 
     printf("[*] Minando bloque: %s\n", filename);
 
+    time(&start);
     while(find == 0){
+    //while(sec < trigger){
+	//difference = clock() - before;
+	//sec = difference / CLOCKS_PER_SEC;
 	iter++;
 	//Calcular hexadecimal aleatorio e insertarlo en el bloque
 	random_hex(hex_num, n);
@@ -63,9 +75,12 @@ int main(int argc, char * argv[]){
 	    remove(new_filename);
 	}
     }
+    time(&end);
+    dif = difftime(end, start);
+
 
     printf("[*] Resumen: %s\n", hash1);
-    printf("[OK] Minado con exito!\n	-Coste: %d\n	-Numero de ceros: %d\n", iter, count);
+    printf("[OK] Minado con exito!\n	-Coste: %d\n	-Numero de ceros: %d\n	-Tiempo transcurrido:%1.1f s\n", iter, count, dif);
     
 }
 
@@ -85,7 +100,7 @@ void random_hex(char hex[9], uint32_t n){
 
     FILE * f = fopen("/dev/urandom", "rb");
     fread(&n, sizeof(uint32_t), 1, f);
-    sprintf(hex, "%08X", n);
+    sprintf(hex, "%08x", n);
     //printf("hex: %s\n", hex);
     fclose(f);
 }
@@ -108,6 +123,28 @@ void copy_file(FILE *f1, char *filename, FILE *f2, char new_filename[20], char h
 
     fprintf(f2, hex);
     fprintf(f2, " SGSSI-21_UFER\n");
+    fclose(f1);
+    fclose(f2);
+
+
+}
+
+void copy_file_final(FILE *f1, char filename[20], FILE *f2, char new_filename[20]){
+    
+    char line[MAX_LINE_LENGTH];
+    //Abrir los documentos
+    if((f1 = fopen(filename, "r")) == NULL){
+	__error(0, "No se ha encontrado el fichero");
+    }
+    if((f2 = fopen(new_filename, "a+")) == NULL){
+	__error(0, "No se ha encontrado el fichero");
+    }
+
+    //Copiar lso documentos
+    while(fgets(line, sizeof(line), f1) != NULL){
+	fprintf(f2, line);
+    }
+
     fclose(f1);
     fclose(f2);
 
