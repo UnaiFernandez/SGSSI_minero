@@ -30,5 +30,7 @@ A la variable *file* se le asigna el nombre del bloque y a la variable *zeros* e
 ## Integridad de los archivos 
 
 **BTC_miner.c:** c59056d49067bfbc1cc18eaf50ed581e 
+
 **sha256calc.c:** 043d24299581d40972cd55ad8cb80705 
+
 **sha256calc.h:** 69a9beeec2a125486a7f97765775a2d9
