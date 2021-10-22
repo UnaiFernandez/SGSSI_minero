@@ -31,10 +31,10 @@ De esta manera se eliminan todos los archivo .o generados y tambien el ejecutabl
 
 ## Integridad de los archivos 
 
-**BTC_miner.c:** 1079fac6e4d210e112c7b689caa1edc2 
+**BTC_miner.c:** 6acb7a2933a68f350741d1ed8af7ee03 
 
-**BTC_miner.h:** 4512cb152663c072b033836ff7b328f7 
+**BTC_miner.h:** 7a09946820149c6239eb1d1fd6e0d61e 
 
-**sha256calc.c:** 043d24299581d40972cd55ad8cb80705 
+**sha256calc.c:** 65bed8589e0f5fb97e91ad6b8a8765a2 
 
-**sha256calc.h:** 69a9beeec2a125486a7f97765775a2d9
+**sha256calc.h:** d1be699787971d8dfd9053b2197fc30b
