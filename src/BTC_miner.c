@@ -38,6 +38,7 @@ int main(int argc, char * argv[]){
     char hash1[65], hash[65];
     int count = 0, find = 0, iter = 0, max;
     uint32_t n;
+    char *buff;
     
     time_t start, end;
     double dif;
@@ -49,7 +50,10 @@ int main(int argc, char * argv[]){
     max = atoi(argv[2]);
     max--;
     sprintf(new_filename, "new_%s", filename);
-    sprintf(final_filename, "final_%s", filename);
+    sprintf(final_filename, "new_%s", filename);
+    int lineas = block_lines(bloque, filename);
+    buff = malloc(lineas*MAX_LINE_LENGTH*sizeof(char));
+    
 
 
     //Inicio del minado del bloque
@@ -63,10 +67,12 @@ int main(int argc, char * argv[]){
 	//Calcular hexadecimal aleatorio e insertarlo en el bloque
 	random_hex(hex_num, n);
 	//n++;
-	copy_file(bloque, filename, nuevo_bloque, new_filename, hex_num);
+	//copy_file(bloque, filename, nuevo_bloque, new_filename, hex_num);
+	copy_to_buff(bloque, filename, buff, hex_num);
     
 	//Hash del fichero
-	sha256_file(new_filename, hash1);
+	//sha256_file(new_filename, hash1);
+	sha256(buff, hash1);
 
 	//contar el numero de ceros
 	count = count_zeros(hash1);
@@ -74,14 +80,33 @@ int main(int argc, char * argv[]){
 
 	if(count > max){
 	    find = 1;
+	    //printf("[*] Minando bloque: %s\n", new_filename);
+	    copy_file(bloque, filename, nuevo_bloque, final_filename, hex_num);
 	}else{
-	    remove(new_filename);
+	 //   remove(new_filename);
+	 memset(buff, '\0', 38*67);
 	}
     }
     time(&end);
     dif = difftime(end, start);
+    
+/*
+    random_hex(hex_num, n);
+    copy_to_buff(bloque, filename, buff, hex_num);
+    sha256(buff, hash1);
+    printf("%s\n", buff);
+    //sprintf(buff, "");
+    //strcpy(buff, "");
+    //buff[0] = '\0';
+    memset(buff, '\0', 38*67);
+    //printf("buff:%s\n", buff);
+    random_hex(hex_num, n);
+    copy_to_buff(bloque, filename, buff, hex_num);
+    sha256(buff, hash1);
+    printf("%s\n", buff);*/
 
 
+    printf("lineas:%d\n", lineas);
     printf("[*] Resumen: %s\n", hash1);
     printf("[OK] Minado con exito!\n	-Coste: %d iteraciones\n	-Numero de ceros: %d\n	-Tiempo transcurrido: %1.1f s\n", iter, count, dif);
     
@@ -124,18 +149,49 @@ void copy_file(FILE *f1, char *filename, FILE *f2, char new_filename[20], char h
     if((f2 = fopen(new_filename, "a+")) == NULL){
 	__error(0, "No se ha encontrado el fichero");
     }
-
     //Copiar lso documentos
     while(fgets(line, sizeof(line), f1) != NULL){
 	fprintf(f2, line);
     }
 
+    fprintf(f2, "\n");
     fprintf(f2, hex);
-    fprintf(f2, " G10212325\n");
+    //fprintf(f2, " AG10212325\n");
     fclose(f1);
     fclose(f2);
 
 
+}
+
+void copy_to_buff(FILE *f1, char *filename, char *buff, char hex[9]){
+    
+    char line[MAX_LINE_LENGTH];
+    char *lag = " G10212325\n";
+    //Abrir los documentos
+    if((f1 = fopen(filename, "r")) == NULL){
+	__error(0, "No se ha encontrado el fichero");
+    }
+	
+    fread(buff, 1, 38*67, f1);
+
+    strcat(hex, lag);
+    strcat(buff, hex);
+    
+    fclose(f1);
+}
+
+int block_lines(FILE *f1, char *filename){
+    int line_counter = 0;
+    char line[MAX_LINE_LENGTH];
+    if((f1 = fopen(filename, "r")) == NULL){
+	__error(0, "No se ha encontrado el fichero");
+    }
+    
+    //Copiar lso documentos
+    while(fgets(line, sizeof(line), f1) != NULL){
+	line_counter++;
+    }
+    return line_counter;
 }
 
 /*

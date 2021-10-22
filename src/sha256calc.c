@@ -19,6 +19,24 @@ void sha256_hash_string (char hash[SHA256_DIGEST_LENGTH], char outputBuffer[65])
 }
 
 
+void sha256(char *string, char outputBuffer[65])
+{
+    unsigned char  hash[SHA256_DIGEST_LENGTH];
+    int len;
+    SHA256_CTX sha256;
+    SHA256_Init(&sha256);
+
+	len=strlen(string);
+    SHA256_Update(&sha256, string,len);
+    SHA256_Final(hash, &sha256);
+    int i = 0;
+    for(i = 0; i < SHA256_DIGEST_LENGTH; i++)
+    {
+        sprintf(outputBuffer + (i * 2), "%02x", (unsigned char)hash[i]);
+    }
+    outputBuffer[64] = 0;
+}
+
 int sha256_file(char *path, char outputBuffer[65])
 {
     FILE *file = fopen(path, "rb");

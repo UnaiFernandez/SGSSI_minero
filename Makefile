@@ -15,4 +15,4 @@ exec:
 clean:
 	rm -rf BTC_miner
 	rm -rf *.o
-	rm new_CB04
+	rm new*
