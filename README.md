@@ -27,6 +27,9 @@ A la variable *file* se le asigna el nombre del bloque (*CB04* en este caso, por
 
 De esta manera se eliminan todos los archivo .o generados y tambien el ejecutable y el nuevo bloque.
 
+**Es conveniente ejecutar el comando** *make clean* **antes de volver a ejecutar el programa nuevamente, sino el archivo de resultado no saldra como esperado.**
+
+
 ![Ejemplo de ejecución](images/minero_img.png "Ejemplo de ejecución") 
 
 ## Integridad de los archivos 
