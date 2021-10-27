@@ -151,7 +151,7 @@ void copy_file(FILE *f1, char *filename, FILE *f2, char new_filename[20], char h
 void copy_to_buff(FILE *f1, char *filename, char *buff, char hex[9], int lineas){
     
     char line[MAX_LINE_LENGTH];
-    char *lag = " G10212325\n";
+    char *lag = " G23\n";
 
     //Abrir el documento
     if((f1 = fopen(filename, "r")) == NULL){
