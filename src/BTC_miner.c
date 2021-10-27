@@ -79,6 +79,7 @@ int main(int argc, char * argv[]){
 	if(count > max){
 	    find = 1;
 	    copy_file(bloque, filename, nuevo_bloque, final_filename, hex_num);
+	    printf("%s", buff);
 	}else{
 	 memset(buff, '\0', lineas*MAX_LINE_LENGTH);    //Vaciar la variable buff
 	}
@@ -137,7 +138,6 @@ void copy_file(FILE *f1, char *filename, FILE *f2, char new_filename[20], char h
     }
 
     //Añadir la ultima linea
-    fprintf(f2, "\n");
     fprintf(f2, hex);
     fclose(f1);
     fclose(f2);
@@ -159,7 +159,7 @@ void copy_to_buff(FILE *f1, char *filename, char *buff, char hex[9], int lineas)
     }
 	
     //leer el contenido y guardarlo en buff
-    fread(buff, 1, lineas*MAX_LINE_LENGTH, f1);
+    fread(buff, 1, lineas*MAX_LINE_LENGTH-1, f1);
 
     //añadir el hezadecimal
     strcat(hex, lag);

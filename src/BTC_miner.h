@@ -1,4 +1,4 @@
-#define MAX_LINE_LENGTH 67	    //Longitud maxima de la linea
+#define MAX_LINE_LENGTH 65	    //Longitud maxima de la linea
 
 void __error(int cod, char *s);	    //Función error
 void copy_file(FILE *f1, char *filename, FILE *f2, char new_filename[20], char hex[9]);	    //Función para copiar contenido del fichero
