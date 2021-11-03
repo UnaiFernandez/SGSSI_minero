@@ -33,7 +33,9 @@ int main(int argc, char * argv[]){
 
     //Declaraión de variables
     FILE *bloque, *nuevo_bloque, *final_block;
-    char *filename, new_filename[20], final_filename[20];
+    char *filename;
+    char new_filename[9] = "new_file";
+    printf("%s\n", new_filename);
     char hex_num[9];
     char hash1[65], hash[65];
     int count = 0, find = 0, iter = 0, max;
@@ -48,8 +50,8 @@ int main(int argc, char * argv[]){
     filename = argv[1];                                 //Nombre del fichero
     max = atoi(argv[2]);                                //numero de ceros
     max--;
-    sprintf(new_filename, "new_%s", filename);          //guardar el nombre del nuevo fichero
-    sprintf(final_filename, "new_%s", filename);        //guardar el nombre del nuevo fichero
+    //sprintf(new_filename, "new_%s", filename);          //guardar el nombre del nuevo fichero
+    //sprintf(final_filename, "new_%s", filename);        //guardar el nombre del nuevo fichero
     int lineas = block_lines(bloque, filename);         //contar las lineas que tiene el bloque
     buff = malloc(lineas*MAX_LINE_LENGTH*sizeof(char)); //reservar la memoria para buff
     
@@ -78,8 +80,8 @@ int main(int argc, char * argv[]){
     //si se encuentra un hash con mas o el mismo numero de ceros establecido se copia el resultado a un fichero
 	if(count > max){
 	    find = 1;
-	    copy_file(bloque, filename, nuevo_bloque, final_filename, hex_num);
-	    printf("%s", buff);
+	    copy_file(bloque, filename, nuevo_bloque, new_filename, hex_num);
+	    //printf("%s", buff);
 	}else{
 	 memset(buff, '\0', lineas*MAX_LINE_LENGTH);    //Vaciar la variable buff
 	}
@@ -122,15 +124,15 @@ void random_hex(char hex[9], uint32_t n){
 /*
  * Función para copiar el contenido del bloque original al nuevo y añadir la linea con el numero hexadecimal
  */
-void copy_file(FILE *f1, char *filename, FILE *f2, char new_filename[20], char hex[9]){
+void copy_file(FILE *f1, char *filename, FILE *f2, char new_filename[8], char hex[9]){
     
     char line[MAX_LINE_LENGTH];
     //Abrir los documentos
     if((f1 = fopen(filename, "r")) == NULL){
-	__error(0, "No se ha encontrado el fichero");
+	__error(0, "No se ha encontrado el fichero 2");
     }
     if((f2 = fopen(new_filename, "a+")) == NULL){
-	__error(0, "No se ha encontrado el fichero");
+	__error(0, "No se ha encontrado el fichero 3");
     }
     //Copiar los documentos
     while(fgets(line, sizeof(line), f1) != NULL){
@@ -151,18 +153,16 @@ void copy_file(FILE *f1, char *filename, FILE *f2, char new_filename[20], char h
 void copy_to_buff(FILE *f1, char *filename, char *buff, char hex[9], int lineas){
     
     char line[MAX_LINE_LENGTH];
-    char *lag = " G23\n";
-
     //Abrir el documento
     if((f1 = fopen(filename, "r")) == NULL){
-	__error(0, "No se ha encontrado el fichero");
+	__error(0, "No se ha encontrado el fichero 1");
     }
 	
     //leer el contenido y guardarlo en buff
     fread(buff, 1, lineas*MAX_LINE_LENGTH-1, f1);
 
     //añadir el hezadecimal
-    strcat(hex, lag);
+    strcat(hex, " G23\n");
     strcat(buff, hex);
     
     fclose(f1);
@@ -174,7 +174,7 @@ int block_lines(FILE *f1, char *filename){
     
     //Abrir el documento
     if((f1 = fopen(filename, "r")) == NULL){
-	__error(0, "No se ha encontrado el fichero");
+	__error(0, "No se ha encontrado el fichero contador de lineas");
     }
     
     //Copiar lso documentos

@@ -12,6 +12,7 @@ all:
 	$(CC) src/BTC_miner.c src/sha256calc.c -o $(OBJ) $(CFLAGS)
 exec:
 	./BTC_miner $(file) $(zeros)
+	./fix.sh $(file)
 clean:
 	rm -rf BTC_miner
 	rm -rf *.o
